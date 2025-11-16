@@ -11,11 +11,16 @@ public class WelcomeController {
 
     @FXML
     private void createClicked(ActionEvent event) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/create.fxml"));
-        Parent root = loader.load();
-
+        Parent root = FXMLLoader.load(getClass().getResource("/create.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.getScene().setRoot(root);
     }
 
+    @FXML
+    private void backClicked(ActionEvent event) throws Exception {
+        System.out.println("backClicked fired");
+        Parent root = FXMLLoader.load(getClass().getResource("/WelcomePage.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.getScene().setRoot(root);
+    }
 }
