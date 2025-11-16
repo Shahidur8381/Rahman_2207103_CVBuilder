@@ -1,0 +1,13 @@
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<VBox xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      alignment="CENTER" spacing="20" prefWidth="800" prefHeight="600">
+    <Label text="Create CV Screen (placeholder)" />
+    <Button text="Back to Welcome" onAction="#backClicked"/>
+</VBox>
