@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
@@ -9,73 +9,54 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example._207103_project.PreviewController"
             prefWidth="700.0" prefHeight="900.0">
-
     <top>
         <Label text="CV Preview" textAlignment="CENTER" textFill="BLUE" underline="true" BorderPane.alignment="CENTER">
-            <font>
-                <Font name="System Bold Italic" size="24.0"/>
-            </font>
-            <padding>
-                <Insets top="12" right="12" bottom="12" left="12"/>
-            </padding>
+            <font><Font name="System Bold Italic" size="24.0"/></font>
+            <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
         </Label>
     </top>
-
-    <padding>
-        <Insets top="12" right="12" bottom="12" left="12"/>
-    </padding>
-
+    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
     <center>
         <ScrollPane prefWidth="680" prefHeight="780" BorderPane.alignment="CENTER">
             <content>
-                <VBox prefWidth="660" spacing="15">
+                <VBox prefWidth="660" spacing="12">
                     <children>
-
-                        <VBox spacing="5">
-                            <Label fx:id="nameLabel" style="-fx-font-size:26px; -fx-font-weight:bold;"/>
-                            <Label fx:id="contactLabel" style="-fx-font-size:14px;"/>
-                        </VBox>
-
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <ImageView fx:id="previewPhoto" fitWidth="120" fitHeight="120" preserveRatio="true"/>
+                            <VBox>
+                                <Label fx:id="nameLabel" style="-fx-font-size:26px; -fx-font-weight:bold;"/>
+                                <Label fx:id="contactLabel" style="-fx-font-size:14px;"/>
+                            </VBox>
+                        </HBox>
                         <Separator/>
-
-                        <VBox spacing="5">
+                        <VBox spacing="6">
                             <Label text="Educational Qualifications:" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
                             <VBox fx:id="educationBox" spacing="4"/>
                         </VBox>
-
-                        <VBox spacing="5">
+                        <VBox spacing="6">
                             <Label text="Skills:" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
                             <FlowPane fx:id="skillsBox" hgap="8" vgap="8"/>
                         </VBox>
-
-                        <VBox spacing="5">
+                        <VBox spacing="6">
                             <Label text="Work Experience:" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
                             <VBox fx:id="experienceBox" spacing="4"/>
                         </VBox>
-
-                        <VBox spacing="5">
+                        <VBox spacing="6">
                             <Label text="Projects:" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
                             <VBox fx:id="projectsBox" spacing="4"/>
                         </VBox>
-
                     </children>
-                    <padding>
-                        <Insets top="10" right="10" bottom="10" left="10"/>
-                    </padding>
+                    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
                 </VBox>
             </content>
         </ScrollPane>
     </center>
-
     <bottom>
         <HBox alignment="CENTER" spacing="12" BorderPane.alignment="CENTER">
             <children>
                 <Button text="Back" onAction="#backToCreate" style="-fx-background-color: red;" textFill="WHITE"/>
             </children>
-            <padding>
-                <Insets top="8" right="12" bottom="12" left="12"/>
-            </padding>
+            <padding><Insets top="8" right="12" bottom="12" left="12"/></padding>
         </HBox>
     </bottom>
-
 </BorderPane>
