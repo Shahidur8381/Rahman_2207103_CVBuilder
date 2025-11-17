@@ -30,22 +30,58 @@ public class PreviewController {
     }
 
     private void loadData(){
-        nameLabel.setText(model.getFullName());
-        contactLabel.setText(model.getEmail()+" | "+model.getPhone()+" | "+model.getAddress());
+        if(model == null) return;
+
+        nameLabel.setText(emptyIfNull(model.getFullName()));
+        contactLabel.setText(String.join(" | ",
+                emptyIfNull(model.getEmail()),
+                emptyIfNull(model.getPhone()),
+                emptyIfNull(model.getAddress())).replaceAll("\\s*\\|\\s*$",""));
+
         educationBox.getChildren().clear();
-        model.getEducation().forEach(e -> educationBox.getChildren().add(new Label("• "+e)));
+        for(String e : model.getEducation()){
+            if(e == null || e.isBlank()) continue;
+            Label l = new Label("• " + e.trim());
+            l.setStyle("-fx-text-fill:#0b3a4a; -fx-font-size:13px;");
+            educationBox.getChildren().add(l);
+        }
+
         skillsBox.getChildren().clear();
-        model.getSkills().forEach(s -> {
-            Label l = new Label(s);
-            l.setStyle("-fx-border-color: gray; -fx-padding: 3 6;");
-            skillsBox.getChildren().add(l);
-        });
+        for(String s : model.getSkills()){
+            if(s == null || s.isBlank()) continue;
+            Label chip = new Label(s.trim());
+            chip.setStyle("-fx-text-fill:#0b3a4a; -fx-font-size:12px; -fx-border-color:#cbd5e1; -fx-border-radius:4; -fx-background-radius:4; -fx-padding:4 8 4 8; -fx-background-color: transparent;");
+            chip.setMinHeight(Label.USE_PREF_SIZE);
+            skillsBox.getChildren().add(chip);
+        }
+
         experienceBox.getChildren().clear();
-        model.getExperience().forEach(x -> experienceBox.getChildren().add(new Label("• "+x)));
+        for(String x : model.getExperience()){
+            if(x == null || x.isBlank()) continue;
+            Label l = new Label("• " + x.trim());
+            l.setStyle("-fx-text-fill:#0b3a4a; -fx-font-size:13px;");
+            experienceBox.getChildren().add(l);
+        }
+
         projectsBox.getChildren().clear();
-        model.getProjects().forEach(p -> projectsBox.getChildren().add(new Label("• "+p)));
-        if(model.getPhotoPath()!=null && !model.getPhotoPath().isBlank()){
-            try{ previewPhoto.setImage(new Image(model.getPhotoPath(),120,120,true,true)); }catch(Exception ignored){}
+        for(String p : model.getProjects()){
+            if(p == null || p.isBlank()) continue;
+            Label l = new Label("• " + p.trim());
+            l.setStyle("-fx-text-fill:#0b3a4a; -fx-font-size:13px;");
+            projectsBox.getChildren().add(l);
+        }
+
+        if(model.getPhotoPath() != null && !model.getPhotoPath().isBlank()){
+            try{
+                previewPhoto.setImage(new Image(model.getPhotoPath(),120,120,true,true));
+                previewPhoto.setVisible(true);
+            }catch(Exception ex){
+                previewPhoto.setImage(null);
+                previewPhoto.setVisible(false);
+            }
+        }else{
+            previewPhoto.setImage(null);
+            previewPhoto.setVisible(false);
         }
     }
 
@@ -55,4 +91,6 @@ public class PreviewController {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.getScene().setRoot(root);
     }
+
+    private String emptyIfNull(String s){ return s == null ? "" : s; }
 }
