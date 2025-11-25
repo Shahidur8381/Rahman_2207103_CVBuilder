@@ -1,5 +1,4 @@
 package com.example._207103_project;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,11 +11,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
-
 public class PreviewController {
-
     private CVModel model;
-
+    private boolean isEditMode = false;
     @FXML private Label nameLabel;
     @FXML private Label contactLabel;
     @FXML private VBox educationBox;
@@ -24,21 +21,20 @@ public class PreviewController {
     @FXML private VBox experienceBox;
     @FXML private VBox projectsBox;
     @FXML private ImageView previewPhoto;
-
     public void setModel(CVModel model){
         this.model = model;
         loadData();
     }
-
+    public void setEditMode(boolean editMode) {
+        this.isEditMode = editMode;
+    }
     private void loadData(){
         if(model == null) return;
-
         nameLabel.setText(emptyIfNull(model.getFullName()));
         contactLabel.setText(String.join(" | ",
                 emptyIfNull(model.getEmail()),
                 emptyIfNull(model.getPhone()),
                 emptyIfNull(model.getAddress())).replaceAll("\\s*\\|\\s*$",""));
-
         educationBox.getChildren().clear();
         for(String e : model.getEducation()){
             if(e == null || e.isBlank()) continue;
@@ -46,7 +42,6 @@ public class PreviewController {
             l.setStyle("-fx-text-fill:#0b3a4a; -fx-font-size:13px;");
             educationBox.getChildren().add(l);
         }
-
         skillsBox.getChildren().clear();
         for(String s : model.getSkills()){
             if(s == null || s.isBlank()) continue;
@@ -55,7 +50,6 @@ public class PreviewController {
             chip.setMinHeight(Label.USE_PREF_SIZE);
             skillsBox.getChildren().add(chip);
         }
-
         experienceBox.getChildren().clear();
         for(String x : model.getExperience()){
             if(x == null || x.isBlank()) continue;
@@ -63,7 +57,6 @@ public class PreviewController {
             l.setStyle("-fx-text-fill:#0b3a4a; -fx-font-size:13px;");
             experienceBox.getChildren().add(l);
         }
-
         projectsBox.getChildren().clear();
         for(String p : model.getProjects()){
             if(p == null || p.isBlank()) continue;
@@ -71,7 +64,6 @@ public class PreviewController {
             l.setStyle("-fx-text-fill:#0b3a4a; -fx-font-size:13px;");
             projectsBox.getChildren().add(l);
         }
-
         if(model.getPhotoPath() != null && !model.getPhotoPath().isBlank()){
             try{
                 previewPhoto.setImage(new Image(model.getPhotoPath(),120,120,true,true));
@@ -85,30 +77,35 @@ public class PreviewController {
             previewPhoto.setVisible(false);
         }
     }
-
     @FXML
     private void saveCV(ActionEvent event) {
         if (model == null) return;
-        
         try {
             DatabaseManager dbManager = DatabaseManager.getInstance();
-            int cvId = dbManager.saveCV(model);
-            
-            if (cvId > 0) {
+            if (isEditMode) {
+                dbManager.updateCV(model);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");
                 alert.setHeaderText(null);
-                alert.setContentText("CV saved successfully to database!");
+                alert.setContentText("CV updated successfully!");
                 alert.showAndWait();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Failed to save CV to database.");
-                alert.showAndWait();
+                int cvId = dbManager.saveCV(model);
+                if (cvId > 0) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText(null);
+                    alert.setContentText("CV saved successfully to database!");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Failed to save CV to database.");
+                    alert.showAndWait();
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
@@ -116,13 +113,12 @@ public class PreviewController {
             alert.showAndWait();
         }
     }
-
     @FXML
     private void backToCreate(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/create.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.getScene().setRoot(root);
     }
-
     private String emptyIfNull(String s){ return s == null ? "" : s; }
 }
+
