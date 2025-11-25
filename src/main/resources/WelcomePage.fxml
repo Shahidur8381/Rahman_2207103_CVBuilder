@@ -13,9 +13,14 @@
             <Font size="55.0" />
          </font>
       </TextArea>
-      <Button fx:id="create" layoutX="233.0" layoutY="271.0" mnemonicParsing="false" onAction="#createClicked" prefHeight="51.0" prefWidth="209.0" style="-fx-background-color: yellow;" text="Create Your CV" textAlignment="CENTER" textFill="#f86300">
+      <Button fx:id="create" layoutX="75.0" layoutY="271.0" mnemonicParsing="false" onAction="#createClicked" prefHeight="51.0" prefWidth="209.0" style="-fx-background-color: yellow;" text="Create Your CV" textAlignment="CENTER" textFill="#f86300">
          <font>
-            <Font size="24.0" />
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="explore" layoutX="395.0" layoutY="271.0" mnemonicParsing="false" onAction="#exploreClicked" prefHeight="51.0" prefWidth="209.0" style="-fx-background-color: #3b82f6;" text="Explore Saved CVs" textAlignment="CENTER" textFill="white">
+         <font>
+            <Font size="20.0" />
          </font>
       </Button>
    </children>

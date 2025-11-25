@@ -10,6 +10,7 @@ module com.example._207103_project {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.sql;
 
     opens com.example._207103_project to javafx.fxml;
     exports com.example._207103_project;

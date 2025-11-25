@@ -74,6 +74,7 @@
         <HBox alignment="CENTER" spacing="12" BorderPane.alignment="CENTER">
             <children>
                 <Button text="Back" onAction="#backToCreate" style="-fx-background-color:#ef4444; -fx-text-fill: white; -fx-font-weight:bold; -fx-background-radius:6; -fx-padding:8 12 8 12;"/>
+                <Button text="Save to Database" onAction="#saveCV" style="-fx-background-color:#10b981; -fx-text-fill: white; -fx-font-weight:bold; -fx-background-radius:6; -fx-padding:8 12 8 12;"/>
             </children>
             <padding><Insets top="8" right="12" bottom="12" left="12"/></padding>
         </HBox>

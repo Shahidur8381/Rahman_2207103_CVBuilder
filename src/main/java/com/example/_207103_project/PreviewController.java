@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -82,6 +83,37 @@ public class PreviewController {
         }else{
             previewPhoto.setImage(null);
             previewPhoto.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void saveCV(ActionEvent event) {
+        if (model == null) return;
+        
+        try {
+            DatabaseManager dbManager = DatabaseManager.getInstance();
+            int cvId = dbManager.saveCV(model);
+            
+            if (cvId > 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("CV saved successfully to database!");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Failed to save CV to database.");
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("An error occurred: " + e.getMessage());
+            alert.showAndWait();
         }
     }
 
